@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-function NewTaskForm() {
-  
+export default class NewTaskForm extends Component {
+  render() {
     return (
       <input placeholder='What needs to be done?' className='new-todo'></input>
     );
   }
+}
 
-export default NewTaskForm;
