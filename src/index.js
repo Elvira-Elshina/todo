@@ -6,18 +6,32 @@ import Footer from './components/Footer/Footer';
 import '../src/index.css'
 
 export default class App extends Component {
-  minId = 4;
+  minId = 100;
 
   state = {
-    todoData:  [
-      {description: 'Drink', completed: false, id: 1}, 
-      {description: 'Sleep', completed: true, id: 2}, 
-      {description: 'Wake up', completed: false, id: 3}
-    ]
-  
+    todoData:  [],
+    filter: 'all'
   }
 
+
+  onToggleCompleted = (id) => {
+    this.setState(({ todoData }) => {
+      const idx = todoData.findIndex((el) => el.id === id);
+
+      const oldItem = todoData[idx];
+      const newItem = {...oldItem, 
+        completed: !oldItem.completed};
+
+        const newArr = [...todoData.slice(0, idx),
+          newItem,
+           ...todoData.slice(idx + 1)];
+        
+        return {
+          todoData: newArr
+        }
+    })
  
+  }
 
   deleteItem = (id) => {
     this.setState(({todoData}) => {
@@ -26,7 +40,8 @@ export default class App extends Component {
       const end = todoData.slice(idx + 1);
 
       const newArr = [...begin, ...end];
-
+      console.log(id);
+      
       return {
         todoData: newArr
       }
@@ -34,12 +49,18 @@ export default class App extends Component {
     
   }
 
+  createTodoItem(label) {
+    return (
+      {
+        description: label,
+        completed: false,
+        id: this.minId++
+      }
+    )
+  }
+
   addItem = (text) => {
-    const newItem = {
-      description: text,
-      completed: false,
-      id: this.minId++
-    }
+    const newItem = this.createTodoItem(text);
     this.setState(({todoData}) => {
       const newArray = [...todoData, newItem];
       return {
@@ -48,43 +69,63 @@ export default class App extends Component {
     })
 
   }
+
+  
+  ClearCompleted = () => {
+    this.setState(({ todoData }) => {
+    const todosActive = todoData.filter((el) => !el.completed)
+    return {
+      todoData: todosActive
+      }
+    })
+  }
+
+  filter = (items, filter) => {
+    switch(filter) {
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((el) => !el.completed);
+      case 'completed':
+        return items.filter((el) => el.completed);
+      default:
+       return items;
+    }
+  }
+
+
+  onFilterChange = (filter) => {
+    this.setState({ filter })
+  }
+
   render() {
+    const filt = this.state.filter;
+    const todoData = this.state.todoData;
+    const visibleItems = this.filter(todoData, filt)
  
     return (
       <section className="todoapp">
         <header className="header">
           <h1>todos</h1>
-          <NewTaskForm />
+          <NewTaskForm addItem={this.addItem}/>
         </header>
         <section className="main">
-          <TaskList todos={this.state.todoData} onDeleted={this.deleteItem}/>
+          <TaskList todos={visibleItems} 
+          onDeleted={this.deleteItem}
+          onToggleCompleted={this.onToggleCompleted}
+          />
         </section>
-        <Footer />
+        <Footer todos={this.state.todoData}
+        ClearCompleted={this.ClearCompleted}
+        filter={filt}
+        onFilterChange={this.onFilterChange}
+        />
       </section>
     )
   }
 }
 
-// function App() {
-//   const todoData = [
-//     {description: 'Drink', completed: false}, 
-//     {description: 'Sleep', completed: true}, 
-//     {description: 'Wake up', completed: false}
-//   ]
 
-//   return (
-//     <section className="todoapp">
-//       <header className="header">
-//         <h1>todos!</h1>
-//         <NewTaskForm />
-//       </header>
-//       <section className="main">
-//         <TaskList todos={todoData}/>
-//       </section>
-//       <Footer />
-//     </section>
-//   )
-// }
 
 
 const domNode = document.getElementById('root');

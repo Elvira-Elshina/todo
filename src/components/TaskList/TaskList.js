@@ -9,10 +9,14 @@ export default class TaskList extends Component {
             return (
             <Task label={el.description} 
             key={el.id}
-            onDeleted={() => this.props.onDeleted(el.id)
-            } />
+            idKey={el.id}
+            onDeleted={() => this.props.onDeleted(el.id)}
+            onToggleCompleted={() => this.props.onToggleCompleted(el.id)}
+            completed={el.completed}
+             />
             );
          })
+ 
       
          return (
              <ul className="todo-list">
@@ -22,18 +26,3 @@ export default class TaskList extends Component {
     }
 }
 
-// function TaskList({todos}) {  
-//     const elements = todos.map((i) => {
-//        return (
-//        <li className="completed"><Task label={i.description}/></li>
-//        );
-//     })
- 
-//     return (
-//         <ul className="todo-list">
-//             { elements }
-//         </ul>
-//     )
-// }
-
-//  TaskList;
