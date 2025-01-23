@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { createRoot } from 'react-dom/client';
+
 import NewTaskForm from './components/NewTaskForm/NewTaskForm';
 import TaskList from './components/TaskList/TaskList';
 import Footer from './components/Footer/Footer';
 import '../src/index.css'
 
 export default class App extends Component {
-  minId = 100;
 
   state = {
     todoData:  [],
     filter: 'all'
   }
 
+  minId = 100;
 
   onToggleCompleted = (id) => {
     this.setState(({ todoData }) => {
@@ -39,9 +40,7 @@ export default class App extends Component {
       const begin = todoData.slice(0, idx);
       const end = todoData.slice(idx + 1);
 
-      const newArr = [...begin, ...end];
-      console.log(id);
-      
+      const newArr = [...begin, ...end];      
       return {
         todoData: newArr
       }
@@ -54,7 +53,8 @@ export default class App extends Component {
       {
         description: label,
         completed: false,
-        id: this.minId++
+        id: this.minId++,
+        date: new Date()
       }
     )
   }
@@ -71,7 +71,7 @@ export default class App extends Component {
   }
 
   
-  ClearCompleted = () => {
+  clearCompleted = () => {
     this.setState(({ todoData }) => {
     const todosActive = todoData.filter((el) => !el.completed)
     return {
@@ -99,6 +99,7 @@ export default class App extends Component {
   }
 
   render() {
+    
     const filt = this.state.filter;
     const todoData = this.state.todoData;
     const visibleItems = this.filter(todoData, filt)
@@ -116,7 +117,7 @@ export default class App extends Component {
           />
         </section>
         <Footer todos={this.state.todoData}
-        ClearCompleted={this.ClearCompleted}
+        clearCompleted={this.clearCompleted}
         filter={filt}
         onFilterChange={this.onFilterChange}
         />

@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class NewTaskForm extends Component {
   state = {
     label: ''
   };
+
+  static defaultProps = {
+    addItem: () => {}
+  }
+  static propTypes = {
+    addItem: PropTypes.func
+  }
 
   onLabelChange = (e) => {
     const value = e.target.value;

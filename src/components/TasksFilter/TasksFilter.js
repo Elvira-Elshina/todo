@@ -1,42 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './TaskFilter.css';
 
 export default class TasksFilter extends Component {
-    state = {
-        selectedAll: true,
-        selectedActive: false,
-        selectedCompleted: false
+
+    static defaultProps = {
+        filter: 'all',
+        onFilterChange: () => {} 
+    }
+    static propTypes = {
+        filter: PropTypes.string,
+        onFilterChange: PropTypes.func
     }
 
-    // onSelected = () => {
-
-    // }
-
-    // onClickAll = () => {
-    //     this.setState(() => {
-    //         return {
-    //             selectedAll: !this.state.selectedAll,
-    //         }
-    //     })
-    //   }
     
-    //   onClickActive = () => {
-    //     this.setState(() => {
-    //         return {
-    //             selectedActive: !this.state.selectedActive
-    //         }
-    //     })
-    //   }
-    
-      
-    //   onClickCompleted = () => {
-    //     this.setState(() => {
-    //         return {
-    //             selectedCompleted: !this.state.selectedCompleted
-    //         }
-    //     })
-    //   }
-
     buttons = [
         {names: 'all', label: 'All'},
         {names: 'active', label: 'Active'},
