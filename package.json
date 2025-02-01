@@ -24,7 +24,6 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "globals": "^15.14.0",
@@ -61,6 +60,6 @@
   "lint-staged": {
     "*.ts": "npx tsc --noEmit",
     "*.{js,jsx,ts,tsx}": "npx eslint",
-    "*.{js,jsx,ts,tsx,html,css}": "npx prettier --check"
+    "*.{js,jsx,ts,tsx,html,css}": "npx prettier --check --concurrent false"
   }
 }
