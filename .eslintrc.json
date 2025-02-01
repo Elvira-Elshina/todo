@@ -4,19 +4,7 @@
     "es2021": true
   },
   "ignorePatterns": ["node_modules", "dist", "build"],
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/recommended",
-    "plugin:jsx-a11y/recommended",
-    "airbnb",
-    "prettier",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["airbnb", "prettier"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
